@@ -1,6 +1,6 @@
 class AnimatedState {}
 
-class AnimatedIntial extends AnimatedState {}
+class AnimatedIntialState extends AnimatedState {}
 
 class AnimatedSuccess extends AnimatedState {
   final String success;

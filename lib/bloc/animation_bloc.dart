@@ -3,10 +3,10 @@ import 'animation_event.dart';
 import 'animation_state.dart';
 
 class AnimatedBloc extends Bloc<AnimatedEvent, AnimatedState> {
-  AnimatedBloc() : super(AnimatedIntial()) {
+  AnimatedBloc() : super(AnimatedIntialState()) {
     on<AnimatedEvent>((event, emit) {
       if (event is InitialEvent) {
-        emit(AnimatedIntial());
+        emit(AnimatedIntialState());
       } else {
         emit(AnimatedSuccess(success: "Success"));
       }

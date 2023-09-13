@@ -81,8 +81,7 @@ class _SingleItemViewState extends State<SingleItemView>
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 22, top: 10, right: 15),
+                      padding: const EdgeInsets.only(top: 22, left: 10),
                       child: InkWell(
                         onTap: () {
                           Navigator.of(context)
@@ -108,8 +107,7 @@ class _SingleItemViewState extends State<SingleItemView>
     );
   }
 
-  Widget statusTickIcon(int step) {
-    final IconData icon = step == 5 ? Icons.adjust : Icons.done;
+  Widget statusNumberIcon(int step) {
     final Color col = stepColors[step - 1];
 
     return Padding(
@@ -167,9 +165,7 @@ class _SingleItemViewState extends State<SingleItemView>
   Widget entireOrderStatus(String orderStatus, int step) {
     return BlocBuilder<AnimatedBloc, AnimatedState>(
       builder: (context, state) {
-        if (state is InitialEvent) {
-          return Center(child: Text(textConstants.msg));
-        } else {
+        if (state is AnimatedIntialState) {
           if (isVisible == true) {
             return Visibility(
               visible: true,
@@ -177,7 +173,7 @@ class _SingleItemViewState extends State<SingleItemView>
                 children: [
                   Column(
                     children: [
-                      statusTickIcon(step),
+                      statusNumberIcon(step),
                       if (step < 5)
                         AnimatedBuilder(
                           animation: _controller,
@@ -221,6 +217,8 @@ class _SingleItemViewState extends State<SingleItemView>
               child: Text(textConstants.msg),
             );
           }
+        } else {
+          return _handleInitialEventUI();
         }
       },
     );
@@ -275,4 +273,8 @@ class _SingleItemViewState extends State<SingleItemView>
       ),
     );
   }
+}
+
+Widget _handleInitialEventUI() {
+  return Center(child: Text(textConstants.msg));
 }

@@ -64,9 +64,7 @@ class _ItemDetailsState extends State<ItemDetails> {
           ),
           body: BlocBuilder<AnimatedBloc, AnimatedState>(
             builder: (context, state) {
-              if (state is InitialEvent) {
-                return Text(textConstants.msg);
-              } else {
+              if (state is AnimatedIntialState) {
                 return Card(
                   color: Colors.white,
                   child: SizedBox(
@@ -118,6 +116,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                   //SizedBox
                   //Card
                 );
+              } else {
+                return Text(textConstants.msg);
               }
             },
           )),
