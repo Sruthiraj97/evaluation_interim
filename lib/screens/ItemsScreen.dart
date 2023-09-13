@@ -1,7 +1,8 @@
+// ignore: file_names
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sample_shopping/bloc/animation_bloc.dart';
-import 'package:sample_shopping/bloc/animation_event.dart';
 import 'package:sample_shopping/bloc/animation_state.dart';
 import 'package:sample_shopping/constants/textconstants.dart';
 import 'item_details_view.dart';

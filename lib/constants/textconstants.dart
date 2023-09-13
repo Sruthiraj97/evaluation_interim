@@ -1,3 +1,4 @@
+// ignore: camel_case_types
 class textConstants {
   static String cart = "Cart";
   static String orderNoText = "Order No: ";
