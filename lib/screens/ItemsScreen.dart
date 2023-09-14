@@ -143,9 +143,6 @@ class _SingleItemViewState extends State<SingleItemView>
             color: col,
             borderRadius: BorderRadius.circular(15),
           ),
-          // duration: const Duration(milliseconds: 250),
-          // curve: Curves.bounceInOut,
-
           child: Center(
             child: Text(
               step.toString(),
@@ -184,7 +181,7 @@ class _SingleItemViewState extends State<SingleItemView>
                           final interval = 1.0 / stepNumbers.length;
                           final animationValue = (step - 1) * interval +
                               _controller.value * interval;
-                          final double scale = Tween<double>(begin: 0, end: 1)
+                          double scaleY = Tween<double>(begin: 0, end: 1)
                               .animate(
                                 CurvedAnimation(
                                   parent: _controller,
@@ -193,18 +190,11 @@ class _SingleItemViewState extends State<SingleItemView>
                                 ),
                               )
                               .value;
-                          return Transform.scale(
-                            scale: scale,
-                            child: child,
-                          );
+                          return buildProgressBar(child!, scaleY);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10),
-                          child: Container(
-                            width: 3,
-                            height: 40,
-                            color: Colors.blue,
-                          ),
+                          child: buildProgressBarContainer(),
                         ),
                       ),
                   ],
@@ -279,4 +269,27 @@ class _SingleItemViewState extends State<SingleItemView>
 
 Widget _handleInitialEventUI() {
   return Center(child: Text(textConstants.msg));
+}
+
+Widget buildProgressBar(Widget child, double scaleY) {
+  return SizedBox(
+    width: 20,
+    height: 60,
+    child: Transform.scale(
+      scale: 1.0,
+      child: Transform(
+        alignment: Alignment.topCenter, // Align to the top
+        transform: Matrix4.identity()..scale(1.0, scaleY),
+        child: child,
+      ),
+    ),
+  );
+}
+
+Widget buildProgressBarContainer() {
+  return Container(
+    width: 3,
+    height: 40,
+    color: Colors.blue,
+  );
 }
