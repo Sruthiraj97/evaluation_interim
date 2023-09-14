@@ -49,19 +49,7 @@ class _SingleItemViewState extends State<SingleItemView>
       create: (context) => animatedBloc,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            textConstants.cart,
-            style: const TextStyle(
-              color: Colors.black, // Set text color to black
-            ),
-          ),
-          leading: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
-        ),
+        appBar: customAppBar(textConstants.cart),
         body: Visibility(
           visible: isVisible,
           child: Column(
@@ -104,6 +92,22 @@ class _SingleItemViewState extends State<SingleItemView>
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget customAppBar(String title) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.black, // Set text color to black
+        ),
+      ),
+      leading: const Icon(
+        Icons.arrow_back_ios,
+        color: Colors.black,
       ),
     );
   }
@@ -168,50 +172,47 @@ class _SingleItemViewState extends State<SingleItemView>
       builder: (context, state) {
         if (state is AnimatedIntialState) {
           if (isVisible == true) {
-            return Visibility(
-              visible: true,
-              child: Row(
-                children: [
-                  Column(
-                    children: [
-                      statusNumberIcon(step),
-                      if (step < 5)
-                        AnimatedBuilder(
-                          animation: _controller,
-                          builder: (BuildContext _, child) {
-                            final interval = 1.0 / stepNumbers.length;
-                            final animationValue = (step - 1) * interval +
-                                _controller.value * interval;
-                            final double scale = Tween<double>(begin: 0, end: 1)
-                                .animate(
-                                  CurvedAnimation(
-                                    parent: _controller,
-                                    curve: Interval(
-                                        animationValue, (step * interval)),
-                                  ),
-                                )
-                                .value;
-                            return Transform.scale(
-                              scale: scale,
-                              child: child,
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Container(
-                              width: 3,
-                              height: 40,
-                              color: Colors.blue,
-                            ),
+            return Row(
+              children: [
+                Column(
+                  children: [
+                    statusNumberIcon(step),
+                    if (step < 5)
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (BuildContext _, child) {
+                          final interval = 1.0 / stepNumbers.length;
+                          final animationValue = (step - 1) * interval +
+                              _controller.value * interval;
+                          final double scale = Tween<double>(begin: 0, end: 1)
+                              .animate(
+                                CurvedAnimation(
+                                  parent: _controller,
+                                  curve: Interval(
+                                      animationValue, (step * interval)),
+                                ),
+                              )
+                              .value;
+                          return Transform.scale(
+                            scale: scale,
+                            child: child,
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Container(
+                            width: 3,
+                            height: 40,
+                            color: Colors.blue,
                           ),
                         ),
-                    ],
-                  ),
-                  Column(
-                    children: [stepWiseStatusOrder(orderStatus)],
-                  )
-                ],
-              ),
+                      ),
+                  ],
+                ),
+                Column(
+                  children: [stepWiseStatusOrder(orderStatus)],
+                )
+              ],
             );
           } else {
             return Center(

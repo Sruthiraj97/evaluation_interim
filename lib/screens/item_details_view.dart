@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sample_shopping/bloc/animation_bloc.dart';
 import 'package:sample_shopping/bloc/animation_event.dart';
 import 'package:sample_shopping/bloc/animation_state.dart';
-import 'package:sample_shopping/screens/ItemsScreen.dart';
 import '../constants/textconstants.dart';
 
 class ItemDetails extends StatefulWidget {
@@ -29,39 +28,7 @@ class _ItemDetailsState extends State<ItemDetails> {
     return BlocProvider(
       create: (context) => animatedBloc,
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Text(
-              textConstants.selectedItem,
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-            ),
-            leading: GestureDetector(
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SingleItemView(),
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                )),
-            actions: const [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                child: Icon(
-                  Icons.favorite_border_outlined,
-                  color: Colors.black,
-                ),
-              )
-            ],
-          ),
+          appBar: customAppBar(),
           body: BlocBuilder<AnimatedBloc, AnimatedState>(
             builder: (context, state) {
               if (state is AnimatedIntialState) {
@@ -86,14 +53,18 @@ class _ItemDetailsState extends State<ItemDetails> {
                           Image.asset('assets/rating.PNG'),
                         ),
                         ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                                height: 25,
-                                width: 100,
-                                color: Colors.limeAccent,
-                                child: Center(
-                                    child: textData(textConstants.ratingRate,
-                                        14, FontWeight.bold, Colors.orange)))),
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            height: 25,
+                            width: 100,
+                            color: Colors.limeAccent,
+                            child: Center(
+                              child: textData(textConstants.ratingRate, 14,
+                                  FontWeight.bold, Colors.orange),
+                            ),
+                          ),
+                        ),
+
                         const SizedBox(height: 10),
                         ElevatedButton(
                           onPressed: () {},
@@ -121,6 +92,37 @@ class _ItemDetailsState extends State<ItemDetails> {
               }
             },
           )),
+    );
+  }
+
+  PreferredSizeWidget customAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      title: Text(
+        textConstants.selectedItem,
+        style: const TextStyle(
+          color: Colors.black,
+        ),
+      ),
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.black,
+        ),
+      ),
+      actions: const [
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
+          child: Icon(
+            Icons.favorite_border_outlined,
+            color: Colors.black,
+          ),
+        )
+      ],
     );
   }
 
