@@ -50,47 +50,42 @@ class _SingleItemViewState extends State<SingleItemView>
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: customAppBar(textConstants.cart),
-        body: Visibility(
-          visible: isVisible,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 22, left: 22),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(ItemDetails.routeName);
-                        },
-                        child: cardData(),
-                      ),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 200,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22, left: 22),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(ItemDetails.routeName);
+                      },
+                      child: cardData(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 22, left: 10),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(ItemDetails.routeName);
-                        },
-                        child: cardData(),
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22, left: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(ItemDetails.routeName);
+                      },
+                      child: cardData(),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 30, bottom: 30)),
-              stepWiseStatusOrder(textConstants.status.toUpperCase()),
-              entireOrderStatus(textConstants.orderPlaced, 1),
-              entireOrderStatus(textConstants.payConfor, 2),
-              entireOrderStatus(textConstants.processing, 3),
-              entireOrderStatus(textConstants.onTheWay, 4),
-              entireOrderStatus(textConstants.deliver, 5),
-            ],
-          ),
+            ),
+            const Padding(padding: EdgeInsets.only(top: 30, bottom: 30)),
+            stepWiseStatusOrder(textConstants.status.toUpperCase()),
+            entireOrderStatus(textConstants.orderPlaced, 1),
+            entireOrderStatus(textConstants.payConfor, 2),
+            entireOrderStatus(textConstants.processing, 3),
+            entireOrderStatus(textConstants.onTheWay, 4),
+            entireOrderStatus(textConstants.deliver, 5),
+          ],
         ),
       ),
     );
@@ -136,23 +131,7 @@ class _SingleItemViewState extends State<SingleItemView>
             child: child,
           );
         },
-        child: Container(
-          height: 20, // Adjust the height to decrease icon size
-          width: 20,
-          decoration: BoxDecoration(
-            color: col,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Center(
-            child: Text(
-              step.toString(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
+        child: buildStepCircle(step, col),
       ),
     );
   }
@@ -278,7 +257,7 @@ Widget buildProgressBar(Widget child, double scaleY) {
     child: Transform.scale(
       scale: 1.0,
       child: Transform(
-        alignment: Alignment.topCenter, // Align to the top
+        alignment: Alignment.topRight, // Align to the top
         transform: Matrix4.identity()..scale(1.0, scaleY),
         child: child,
       ),
@@ -291,5 +270,29 @@ Widget buildProgressBarContainer() {
     width: 3,
     height: 40,
     color: Colors.blue,
+  );
+}
+
+Widget buildStepCircle(int step, Color col) {
+  return Container(
+    height: 20,
+    width: 20,
+    decoration: BoxDecoration(
+      color: col,
+      borderRadius: BorderRadius.circular(15),
+    ),
+    child: buildStepText(step),
+  );
+}
+
+Widget buildStepText(int step) {
+  return Center(
+    child: Text(
+      step.toString(),
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
   );
 }
