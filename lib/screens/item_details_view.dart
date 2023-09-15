@@ -52,31 +52,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                           100,
                           Image.asset('assets/rating.PNG'),
                         ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            height: 25,
-                            width: 100,
-                            color: Colors.limeAccent,
-                            child: Center(
-                              child: textData(textConstants.ratingRate, 14,
-                                  FontWeight.bold, Colors.orange),
-                            ),
-                          ),
-                        ),
-
+                        clipData(),
                         const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  Colors.blue.shade800)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: textData(textConstants.buyNowButton, 14,
-                                FontWeight.normal, Colors.white),
-                          ),
-                        ),
+                        buyNowButton(),
                         boxSize(10),
                         textData(textConstants.addToCart, 14, FontWeight.bold,
                             Colors.blue.shade800)
@@ -105,15 +83,7 @@ class _ItemDetailsState extends State<ItemDetails> {
           color: Colors.black,
         ),
       ),
-      leading: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-        ),
-      ),
+      leading: backbutton(context),
       actions: const [
         Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
@@ -140,4 +110,44 @@ class _ItemDetailsState extends State<ItemDetails> {
 textData(String data, double size, FontWeight weight, Color col) {
   return Text(data,
       style: TextStyle(fontSize: size, fontWeight: weight, color: col));
+}
+
+clipData() {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(20),
+    child: Container(
+      height: 25,
+      width: 100,
+      color: Colors.limeAccent,
+      child: Center(
+        child: textData(
+            textConstants.ratingRate, 14, FontWeight.bold, Colors.orange),
+      ),
+    ),
+  );
+}
+
+buyNowButton() {
+  return ElevatedButton(
+    onPressed: () {},
+    style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.blue.shade800)),
+    child: Padding(
+      padding: const EdgeInsets.all(4),
+      child: textData(
+          textConstants.buyNowButton, 14, FontWeight.normal, Colors.white),
+    ),
+  );
+}
+
+backbutton(context) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.pop(context);
+    },
+    child: const Icon(
+      Icons.arrow_back,
+      color: Colors.black,
+    ),
+  );
 }
